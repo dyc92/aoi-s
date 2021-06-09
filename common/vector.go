@@ -1,4 +1,4 @@
-﻿package r3
+﻿package common
 
 import (
 	"fmt"
@@ -10,6 +10,12 @@ import (
 // Vector represents a point in ℝ³.
 type Vector struct {
 	X, Y, Z float64
+}
+
+func (v *Vector) Set(x, y, z float64) {
+	v.X = x
+	v.Y = y
+	v.Z = z
 }
 
 // ApproxEqual reports whether v and ov are equal within a small epsilon.

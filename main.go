@@ -16,3 +16,8 @@ func main() {
 	var m, _ = json.Marshal(r)
 	print(string(m))
 }
+
+type aoi_Alloc func(ud interface{}, ptr interface{}, sz int) interface{}
+type aoi_Callback func(ud interface{})
+type aoi_space struct {
+}
