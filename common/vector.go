@@ -3,7 +3,6 @@
 import (
 	"fmt"
 	"math"
-
 	"github.com/golang/geo/s1"
 )
 

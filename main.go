@@ -1,23 +1,19 @@
 package main
 
 import (
-	"aoi/slicetool"
-	"encoding/json"
-	"math/rand"
+	"aoi-s/common"
+	"fmt"
+	"github.com/golang/geo/s1"
 )
 
 func main() {
-	var s = make([]int, 1000)
 
-	for i := 0; i < 100; i++ {
-		s[i] = rand.Intn(100)
-	}
-	var r = slicetool.RepeatingElement(s)
-	var m, _ = json.Marshal(r)
-	print(string(m))
+	v:=common.Vector{X: 1.0, Y: 1.0, Z: 1.0}
+	angle:=geo.Angle(v,common.Vector{X: 2.0, Y: 2.0, Z: 2.0})
+
+	fmt.Println(angle)
 }
 
-type aoi_Alloc func(ud interface{}, ptr interface{}, sz int) interface{}
-type aoi_Callback func(ud interface{})
-type aoi_space struct {
-}
+type aoiAlloc func(ud interface{}, ptr interface{}, sz int) interface{}
+type aoiCallback func(ud interface{})
+type aoiSpace struct{}

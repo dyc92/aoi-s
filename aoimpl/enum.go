@@ -1,4 +1,4 @@
-package aoigrid
+package aoimpl
 
 type EntityType int8
 

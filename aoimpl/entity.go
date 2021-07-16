@@ -1,11 +1,11 @@
-﻿package aoigrid
+﻿package aoimpl
 
 import (
-	. "aoi/common"
+	. "aoi-s/common"
 )
 
 type Entity struct {
-	ID        int
+	Id        int
 	GridID    int
 	SightGrid int
 	KnowGrid  int
@@ -35,4 +35,8 @@ func (e *Entity) init() {
 	e.sightBox = NewBox()
 	e.knownBox = NewBox()
 	e.collisionRadius = 0.1
+}
+
+type GridManager struct {
+
 }

@@ -1,4 +1,4 @@
-package slicetool
+package common
 
 import (
 	"encoding/json"
