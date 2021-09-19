@@ -4,7 +4,6 @@ type EntityType int8
 
 const (
 	Player EntityType = iota
-	Begin  EntityType = Player
 	Monster
 	Npc
 	SubObject
@@ -12,7 +11,6 @@ const (
 	Mine
 	Pet
 	PlayerMirror
-	Gfx
 	MaxType
 )
 

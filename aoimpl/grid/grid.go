@@ -25,3 +25,7 @@ func (g *Grid) Remove(e Entity) {
 func (g Grid) GetEntity(t EntityType) map[int]*Entity {
 	return g.Entities[t]
 }
+
+func (g Grid) GetEntityById(t EntityType, id int) Entity {
+	return *g.Entities[t][id]
+}

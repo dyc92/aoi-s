@@ -2,6 +2,7 @@
 
 import (
 	. "aoi-s/common"
+	"aoi-s/geo/r3"
 )
 
 type Entity struct {
@@ -12,10 +13,10 @@ type Entity struct {
 	Name      string
 	Type      EntityType
 
-	Position    Vector  //位置
-	Rotation    Vector  //旋转
-	Orientation Vector  //方向
-	MaxSpeed    float32 //最大速度
+	Position    r3.Vector //位置
+	Rotation    r3.Vector //旋转
+	Orientation r3.Vector //方向
+	MaxSpeed    float32   //最大速度
 
 	worldBox, sightBox, knownBox A3DAABB
 
@@ -38,5 +39,4 @@ func (e *Entity) init() {
 }
 
 type GridManager struct {
-
 }

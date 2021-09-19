@@ -1,11 +1,13 @@
 ﻿package common
 
+import r3 "aoi-s/geo/r3"
+
 //轴对齐碰撞箱
 type A3DAABB struct {
 	Center, //坐标中心
 	Extents, //线段 箱形体边长
 	Mins,
-	Maxs Vector
+	Maxs r3.Vector
 }
 
 func NewBox() A3DAABB {
@@ -15,8 +17,8 @@ func NewBox() A3DAABB {
 }
 
 func (a *A3DAABB) Clear() {
-	a.Maxs.Set(999999.0, 999999.0, 999999.0)
-	a.Maxs.Set(-999999.0, -999999.0, -999999.0)
+	a.Mins = r3.Vector{999999.0, 999999.0, 999999.0}
+	a.Maxs = r3.Vector{999999.0, 999999.0, 999999.0}
 }
 
 func (a *A3DAABB) CompleteCenterExts() {
