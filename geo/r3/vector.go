@@ -1,20 +1,29 @@
-﻿package common
+// Copyright 2014 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package r3
 
 import (
-	"aoi-s/geo/s1"
 	"fmt"
 	"math"
+
+	"aoi-s/geo/s1"
 )
 
 // Vector represents a point in ℝ³.
 type Vector struct {
 	X, Y, Z float64
-}
-
-func (v *Vector) Set(x, y, z float64) {
-	v.X = x
-	v.Y = y
-	v.Z = z
 }
 
 // ApproxEqual reports whether v and ov are equal within a small epsilon.
