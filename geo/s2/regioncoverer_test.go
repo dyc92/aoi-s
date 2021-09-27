@@ -150,7 +150,7 @@ func TestCovererRandomCaps(t *testing.T) {
 
 func TestRegionCovererInteriorCovering(t *testing.T) {
 	// We construct the region the following way. Start with Cell of level l.
-	// Remove from it one of its grandchildren (level l+2). If we then set
+	// RemoveEntity from it one of its grandchildren (level l+2). If we then set
 	//   minLevel < l + 1
 	//   maxLevel > l + 2
 	//   maxCells = 3
@@ -182,7 +182,7 @@ func TestRegionCovererInteriorCovering(t *testing.T) {
 }
 
 func TestRegionCovererSimpleRegionCovering(t *testing.T) {
-	const maxLevel = maxLevel
+	const maxLevel1 = maxLevel
 	for i := 0; i < 100; i++ {
 		level := randomUniformInt(maxLevel + 1)
 		maxArea := math.Min(4*math.Pi, 1000.0*AvgAreaMetric.Value(level))

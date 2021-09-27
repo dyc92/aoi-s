@@ -744,7 +744,7 @@ func (s *ShapeIndex) Remove(shape Shape) {
 		return
 	}
 
-	// Remove the shape from the shapes map.
+	// RemoveEntity the shape from the shapes map.
 	delete(s.shapes, id)
 
 	// We are removing a shape that has not yet been added to the index,

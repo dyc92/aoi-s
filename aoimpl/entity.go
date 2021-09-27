@@ -1,4 +1,4 @@
-﻿package aoimpl
+package aoimpl
 
 import (
 	. "aoi-s/common"
@@ -36,7 +36,4 @@ func (e *Entity) init() {
 	e.sightBox = NewBox()
 	e.knownBox = NewBox()
 	e.collisionRadius = 0.1
-}
-
-type GridManager struct {
 }

@@ -148,7 +148,7 @@ func (q *ConvexHullQuery) ConvexHull() *Loop {
 		return FullLoop()
 	}
 
-	// Remove duplicates. We need to do this before checking whether there are
+	// RemoveEntity duplicates. We need to do this before checking whether there are
 	// fewer than 3 points.
 	x := make(map[Point]bool)
 	r, w := 0, 0 // read/write indexes
@@ -195,7 +195,7 @@ func (q *ConvexHullQuery) ConvexHull() *Loop {
 	}
 	upper := q.monotoneChain()
 
-	// Remove the duplicate vertices and combine the chains.
+	// RemoveEntity the duplicate vertices and combine the chains.
 	lower = lower[:len(lower)-1]
 	upper = upper[:len(upper)-1]
 	lower = append(lower, upper...)
@@ -208,7 +208,7 @@ func (q *ConvexHullQuery) ConvexHull() *Loop {
 func (q *ConvexHullQuery) monotoneChain() []Point {
 	var output []Point
 	for _, p := range q.points {
-		// Remove any points that would cause the chain to make a clockwise turn.
+		// RemoveEntity any points that would cause the chain to make a clockwise turn.
 		for len(output) >= 2 && RobustSign(output[len(output)-2], output[len(output)-1], p) != CounterClockwise {
 			output = output[:len(output)-1]
 		}
