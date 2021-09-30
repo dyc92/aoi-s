@@ -1,4 +1,4 @@
-package CMap
+package cmap
 
 type EnumMapModeType int8
 
@@ -15,4 +15,10 @@ const (
 	MapStateOpen                            // 开启状态
 	MapStateClose                           // 关闭状态
 	MapStateNormal                          // 普通状态
+)
+
+const (
+	GridSize    float64 = 10
+	MaxKnown    float64 = 0
+	MinBigKnown float64 = 50
 )

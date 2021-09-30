@@ -1,4 +1,4 @@
-package smap
+package cmap
 
 type IAoiScan interface {
 }
