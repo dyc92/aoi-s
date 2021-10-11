@@ -152,13 +152,13 @@ func TestLatLngDistance(t *testing.T) {
 }
 
 func TestLatLngApproxEqual(t *testing.T) {
-	const ε = epsilon / 10
+	const ep = epsilon / 10
 	tests := []struct {
 		a, b LatLng
 		want bool
 	}{
-		{LatLngFromDegrees(30, 50), LatLngFromDegrees(30, 50+ε), true},
-		{LatLngFromDegrees(30, 50), LatLngFromDegrees(30-ε, 50), true},
+		{LatLngFromDegrees(30, 50), LatLngFromDegrees(30, 50+ep), true},
+		{LatLngFromDegrees(30, 50), LatLngFromDegrees(30-ep, 50), true},
 		{LatLngFromDegrees(1, 5), LatLngFromDegrees(2, 3), false},
 	}
 

@@ -1,6 +1,6 @@
 package cmap
 
-import "aoimpl"
+import "aoi-s/aoimpl/grid"
 
 type CMap struct {
 	Name               string
@@ -13,7 +13,7 @@ type CMap struct {
 	MaxKnow            float32
 	ModeType           EnumMapModeType
 	StateType          EnumMapStateType
-	GridMgr            aoimpl.GridManager
+	GridMgr            aoigrid.GridManager
 	SightRadius        int
 }
 

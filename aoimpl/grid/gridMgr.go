@@ -66,6 +66,7 @@ func (gm *GridManager) LeaveMap(e *Entity) {
 	gm.grids[e.GridID].RemoveEntity(e)
 	e.GridID = -1
 }
+
 func (gm *GridManager) UpdatePos(e *Entity) {
 	if !gm.IsPosValid(e.Position) {
 		return
