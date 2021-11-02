@@ -7,7 +7,7 @@ import (
 type Grid struct {
 	Id, X, Y int //格子坐标3
 
-	Entities map[EntityType]map[int]*Entity
+	Entities map[EnumEntityType]map[int]*Entity
 }
 
 func (g *Grid) AddEntity(e *Entity) {
@@ -24,10 +24,10 @@ func (g *Grid) RemoveEntity(e *Entity) {
 	}
 }
 
-func (g Grid) GetEntity(t EntityType) map[int]*Entity {
+func (g Grid) GetEntity(t EnumEntityType) map[int]*Entity {
 	return g.Entities[t]
 }
 
-func (g Grid) GetEntityById(t EntityType, id int) Entity {
+func (g Grid) GetEntityById(t EnumEntityType, id int) Entity {
 	return *g.Entities[t][id]
 }

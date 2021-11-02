@@ -11,7 +11,7 @@ type Entity struct {
 	SightGrid int
 	KnowGrid  int
 	Name      string
-	Type      EntityType
+	Type      EnumEntityType
 
 	Position    r3.Vector //位置
 	Rotation    r3.Vector //旋转

@@ -10,10 +10,34 @@ package quadtree
  *    2 | 1
  *      +
  */
+
+type EnumQuadrantType int8
+
 const (
-	quadrantNone = iota //未被任何象限包含
+	quadrantNone EnumQuadrantType = iota //未被任何象限包含
 	quadrant1
 	quadrant2
 	quadrant3
 	quadrant4
 )
+
+const (
+	watcher = iota
+	marker
+	all
+)
+
+type Quadtree struct {
+	_width, _height, _maxSoltNode, _maxSoltDepth, _tagMax, _defaultSightRadius int
+	_dicNode                                                                   map[int]*Node
+}
+
+func (q Quadtree) Init(xMin, yMin, xMax, yMax, maxNode, maxDepth, tagMax, sightRadius int) {
+	q._width = xMax - xMin
+	q._height = yMax - yMin
+	q._maxSoltNode = maxNode
+	q._maxSoltDepth = maxDepth
+	q._tagMax = tagMax
+	q._dicNode = make(map[int]*Node)
+
+}

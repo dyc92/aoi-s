@@ -1,9 +1,9 @@
 package aoimpl
 
-type EntityType int8
+type EnumEntityType int8
 
 const (
-	Player EntityType = iota
+	Player EnumEntityType = iota
 	Monster
 	Npc
 	SubObject
@@ -14,12 +14,14 @@ const (
 	MaxType
 )
 
-const (
-	Known   = 0x01 //可被观察（可被感知）,未修改前用world替代的known
-	World   = 0x02 //碰撞
-	Sight   = 0x04 //视野
-	Warning = 0x08 //警戒
+type EnumSightType int
 
-	All = 0xff
-	Max = 4 //索引
+const (
+	Known   EnumSightType = 0x01 //可被观察（可被感知）,未修改前用world替代的known
+	World   EnumSightType = 0x02 //碰撞
+	Sight   EnumSightType = 0x04 //视野
+	Warning EnumSightType = 0x08 //警戒
+
+	All EnumSightType = 0xff
+	Max EnumSightType = 4 //索引
 )
