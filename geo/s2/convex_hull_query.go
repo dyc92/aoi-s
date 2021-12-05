@@ -148,7 +148,7 @@ func (q *ConvexHullQuery) ConvexHull() *Loop {
 		return FullLoop()
 	}
 
-	// RemoveEntity duplicates. We need to do this before checking whether there are
+	// Remove duplicates. We need to do this before checking whether there are
 	// fewer than 3 points.
 	x := make(map[Point]bool)
 	r, w := 0, 0 // read/write indexes
@@ -170,9 +170,11 @@ func (q *ConvexHullQuery) ConvexHull() *Loop {
 	// belong at the end of the chain (i.e., the chain is monotone in terms of
 	// the angle around O from the starting point).
 	origin := Point{c.Center().Ortho()}
-	sort.Slice(q.points, func(i, j int) bool {
-		return RobustSign(origin, q.points[i], q.points[j]) == CounterClockwise
-	})
+	sort.Slice(
+		q.points, func(i, j int) bool {
+			return RobustSign(origin, q.points[i], q.points[j]) == CounterClockwise
+		},
+	)
 
 	// Special cases for fewer than 3 points.
 	switch len(q.points) {
@@ -195,7 +197,7 @@ func (q *ConvexHullQuery) ConvexHull() *Loop {
 	}
 	upper := q.monotoneChain()
 
-	// RemoveEntity the duplicate vertices and combine the chains.
+	// Remove the duplicate vertices and combine the chains.
 	lower = lower[:len(lower)-1]
 	upper = upper[:len(upper)-1]
 	lower = append(lower, upper...)
@@ -208,7 +210,7 @@ func (q *ConvexHullQuery) ConvexHull() *Loop {
 func (q *ConvexHullQuery) monotoneChain() []Point {
 	var output []Point
 	for _, p := range q.points {
-		// RemoveEntity any points that would cause the chain to make a clockwise turn.
+		// Remove any points that would cause the chain to make a clockwise turn.
 		for len(output) >= 2 && RobustSign(output[len(output)-2], output[len(output)-1], p) != CounterClockwise {
 			output = output[:len(output)-1]
 		}

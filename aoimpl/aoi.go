@@ -2,12 +2,16 @@ package aoimpl
 
 import (
 	"aoi-s/geo/r2"
+	"aoi-s/geo/r3"
 )
 
 type AOI interface {
-	AddEntity(e Entity)
-	Remove(e Entity)
-	GetEntity(t EnumEntityType)
+	GetEntity(int) *Entity
+	EnterMap(e *Entity)
+	LeaveMap(e *Entity)
+	UpdatePos(e *Entity)
+	Release()
+	Pos2GridIndex(pos r3.Vector) int
 }
 
 type IAoiScan struct {

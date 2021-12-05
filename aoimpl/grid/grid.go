@@ -7,27 +7,27 @@ import (
 type Grid struct {
 	Id, X, Y int //格子坐标3
 
-	Entities map[EnumEntityType]map[int]*Entity
+	Entities map[EnumEntityType]map[*Entity]struct{}
 }
 
-func (g *Grid) AddEntity(e *Entity) {
+func (g *Grid) Init() {
+	g.Entities = make(map[EnumEntityType]map[*Entity]struct{}, MaxType)
+}
+
+func (g *Grid) Add(e *Entity) {
 
 	if _, ok := g.Entities[e.Type]; !ok {
-		g.Entities[e.Type] = make(map[int]*Entity, 500)
+		g.Entities[e.Type] = make(map[*Entity]struct{}, 500)
 	}
-	g.Entities[e.Type][e.Id] = e
+	g.Entities[e.Type][e] = struct{}{}
 }
 
-func (g *Grid) RemoveEntity(e *Entity) {
+func (g *Grid) Remove(e *Entity) {
 	if _, ok := g.Entities[e.Type]; !ok {
-		delete(g.Entities[e.Type], e.Id)
+		delete(g.Entities[e.Type], e)
 	}
 }
 
-func (g Grid) GetEntity(t EnumEntityType) map[int]*Entity {
+func (g Grid) GetEntities(t EnumEntityType) map[*Entity]struct{} {
 	return g.Entities[t]
-}
-
-func (g Grid) GetEntityById(t EnumEntityType, id int) Entity {
-	return *g.Entities[t][id]
 }

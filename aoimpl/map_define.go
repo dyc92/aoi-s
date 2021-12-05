@@ -1,4 +1,4 @@
-package cmap
+package aoimpl
 
 type EnumMapModeType int8
 
@@ -18,7 +18,7 @@ const (
 )
 
 const (
-	GridSize    float64 = 10
+	GridSize    float64 = 100
 	MaxKnown    float64 = 0
 	MinBigKnown float64 = 50
 )

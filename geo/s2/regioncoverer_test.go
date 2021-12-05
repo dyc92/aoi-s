@@ -30,12 +30,17 @@ func TestCovererRandomCells(t *testing.T) {
 		id := randomCellID()
 		covering := rc.Covering(Region(CellFromCellID(id)))
 		if len(covering) != 1 {
-			t.Errorf("Iteration %d, cell ID token %s, got covering size = %d, want covering size = 1", i, id.ToToken(), len(covering))
+			t.Errorf(
+				"Iteration %d, cell ID token %s, got covering size = %d, want covering size = 1", i, id.ToToken(),
+				len(covering),
+			)
 			// if the covering isn't len 1, the next check will panic
 			break
 		}
 		if (covering)[0] != id {
-			t.Errorf("Iteration %d, cell ID token %s, got covering = %v, want covering = %v", i, id.ToToken(), covering, id)
+			t.Errorf(
+				"Iteration %d, cell ID token %s, got covering = %v, want covering = %v", i, id.ToToken(), covering, id,
+			)
 		}
 	}
 }
@@ -150,7 +155,7 @@ func TestCovererRandomCaps(t *testing.T) {
 
 func TestRegionCovererInteriorCovering(t *testing.T) {
 	// We construct the region the following way. Start with Cell of level l.
-	// RemoveEntity from it one of its grandchildren (level l+2). If we then set
+	// Remove from it one of its grandchildren (level l+2). If we then set
 	//   minLevel < l + 1
 	//   maxLevel > l + 2
 	//   maxCells = 3
@@ -301,35 +306,40 @@ func TestRegionCovererIsCanonical(t *testing.T) {
 const numCoveringBMRegions = 1000
 
 func BenchmarkRegionCovererCoveringCap(b *testing.B) {
-	benchmarkRegionCovererCovering(b, func(n int) string {
-		return fmt.Sprintf("Cap%d", n)
-	},
+	benchmarkRegionCovererCovering(
+		b, func(n int) string {
+			return fmt.Sprintf("Cap%d", n)
+		},
 		func(n int) []Region {
 			regions := make([]Region, numCoveringBMRegions)
 			for i := 0; i < numCoveringBMRegions; i++ {
 				regions[i] = randomCap(0.1*AvgAreaMetric.Value(maxLevel), 4*math.Pi)
 			}
 			return regions
-		})
+		},
+	)
 }
 
 func BenchmarkRegionCovererCoveringCell(b *testing.B) {
-	benchmarkRegionCovererCovering(b, func(n int) string {
-		return fmt.Sprintf("Cell%d", n)
-	},
+	benchmarkRegionCovererCovering(
+		b, func(n int) string {
+			return fmt.Sprintf("Cell%d", n)
+		},
 		func(n int) []Region {
 			regions := make([]Region, numCoveringBMRegions)
 			for i := 0; i < numCoveringBMRegions; i++ {
 				regions[i] = CellFromCellID(randomCellIDForLevel(maxLevel - randomUniformInt(n)))
 			}
 			return regions
-		})
+		},
+	)
 }
 
 func BenchmarkRegionCovererCoveringLoop(b *testing.B) {
-	benchmarkRegionCovererCovering(b, func(n int) string {
-		return fmt.Sprintf("Loop-%d-edges", int(math.Pow(2.0, float64(n))))
-	},
+	benchmarkRegionCovererCovering(
+		b, func(n int) string {
+			return fmt.Sprintf("Loop-%d-edges", int(math.Pow(2.0, float64(n))))
+		},
 		func(n int) []Region {
 			size := int(math.Pow(2.0, float64(n)))
 			regions := make([]Region, numCoveringBMRegions)
@@ -337,13 +347,15 @@ func BenchmarkRegionCovererCoveringLoop(b *testing.B) {
 				regions[i] = RegularLoop(randomPoint(), kmToAngle(10.0), size)
 			}
 			return regions
-		})
+		},
+	)
 }
 
 func BenchmarkRegionCovererCoveringCellUnion(b *testing.B) {
-	benchmarkRegionCovererCovering(b, func(n int) string {
-		return fmt.Sprintf("CellUnion-%d-cells", int(math.Pow(2.0, float64(n))))
-	},
+	benchmarkRegionCovererCovering(
+		b, func(n int) string {
+			return fmt.Sprintf("CellUnion-%d-cells", int(math.Pow(2.0, float64(n))))
+		},
 		func(n int) []Region {
 			size := int(math.Pow(2.0, float64(n)))
 			regions := make([]Region, numCoveringBMRegions)
@@ -352,7 +364,8 @@ func BenchmarkRegionCovererCoveringCellUnion(b *testing.B) {
 				regions[i] = &cu
 			}
 			return regions
-		})
+		},
+	)
 }
 
 // TODO(roberts): Add more benchmarking that changes the values in the coverer (min/max level, # cells).
@@ -366,7 +379,8 @@ func benchmarkRegionCovererCovering(b *testing.B, genLabel func(n int) string, g
 
 	// Range over a variety of region complexities.
 	for n := 2; n <= 16; n++ {
-		b.Run(genLabel(n),
+		b.Run(
+			genLabel(n),
 			func(b *testing.B) {
 				b.StopTimer()
 				regions := genRegions(n)
@@ -375,7 +389,8 @@ func benchmarkRegionCovererCovering(b *testing.B, genLabel func(n int) string, g
 				for i := 0; i < b.N; i++ {
 					rc.Covering(regions[i%l])
 				}
-			})
+			},
+		)
 	}
 }
 

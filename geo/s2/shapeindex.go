@@ -313,9 +313,11 @@ func (s *ShapeIndexIterator) refresh() {
 // seek positions the iterator at the first cell whose ID >= target, or at the
 // end of the index if no such cell exists.
 func (s *ShapeIndexIterator) seek(target CellID) {
-	s.position = sort.Search(len(s.index.cells), func(i int) bool {
-		return s.index.cells[i] >= target
-	})
+	s.position = sort.Search(
+		len(s.index.cells), func(i int) bool {
+			return s.index.cells[i] >= target
+		},
+	)
 	s.refresh()
 }
 
@@ -508,8 +510,10 @@ func (t *tracker) toggleShape(shapeID int32) {
 
 		// We've got to a point in the slice where we should be inserted.
 		// (the given shapeID is now less than the current positions id.)
-		t.shapeIDs = append(t.shapeIDs[0:i],
-			append([]int32{shapeID}, t.shapeIDs[i:len(t.shapeIDs)]...)...)
+		t.shapeIDs = append(
+			t.shapeIDs[0:i],
+			append([]int32{shapeID}, t.shapeIDs[i:len(t.shapeIDs)]...)...,
+		)
 		return
 	}
 
@@ -744,7 +748,7 @@ func (s *ShapeIndex) Remove(shape Shape) {
 		return
 	}
 
-	// RemoveEntity the shape from the shapes map.
+	// Remove the shape from the shapes map.
 	delete(s.shapes, id)
 
 	// We are removing a shape that has not yet been added to the index,
@@ -1114,8 +1118,10 @@ func (s *ShapeIndex) updateEdges(pcell *PaddedCell, edges []*clippedEdge, t *tra
 		for pos := 0; pos < 4; pos++ {
 			i, j := pcell.ChildIJ(pos)
 			if len(childEdges[i][j]) > 0 || len(t.shapeIDs) > 0 {
-				s.updateEdges(PaddedCellFromParentIJ(pcell, i, j), childEdges[i][j],
-					t, disjointFromIndex)
+				s.updateEdges(
+					PaddedCellFromParentIJ(pcell, i, j), childEdges[i][j],
+					t, disjointFromIndex,
+				)
 			}
 		}
 	}

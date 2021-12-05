@@ -21,18 +21,13 @@ const (
 	quadrant4
 )
 
-const (
-	watcher = iota
-	marker
-	all
-)
-
 type Quadtree struct {
-	_width, _height, _maxSoltNode, _maxSoltDepth, _tagMax, _defaultSightRadius int
-	_dicNode                                                                   map[int]*Node
+	_width, _height, _maxSoltNode,
+	_maxSoltDepth, _tagMax, _defaultSightRadius int
+	_dicNode map[int]*Node
 }
 
-func (q Quadtree) Init(xMin, yMin, xMax, yMax, maxNode, maxDepth, tagMax, sightRadius int) {
+func (q Quadtree) Init(xMin, yMin, xMax, yMax, maxNode, maxDepth, tagMax int) {
 	q._width = xMax - xMin
 	q._height = yMax - yMin
 	q._maxSoltNode = maxNode
