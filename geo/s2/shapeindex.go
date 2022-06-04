@@ -452,7 +452,7 @@ func (t *tracker) moveTo(b Point) { t.b = b }
 func (t *tracker) drawTo(b Point) {
 	t.a = t.b
 	t.b = b
-	// TODO: the edge crosser may need an in-place Init method if this gets expensive
+	// TODO: the edge crosser may need an in-place NewRect method if this gets expensive
 	t.crosser = NewEdgeCrosser(t.a, t.b)
 }
 

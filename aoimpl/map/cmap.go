@@ -5,22 +5,34 @@ import (
 	"aoi-s/aoimpl/grid"
 )
 
-type CMap struct {
+type Map struct {
 	Name               string
 	MapTemplateId      int
 	LineId             int
 	LimitMaxRoleCount  int
 	LimitWarnRoleCount int
 	Tag                string
+	SightRadius        int
+	gridMgr            aoimpl.AOI
 	ModeType           aoimpl.EnumMapModeType
 	StateType          aoimpl.EnumMapStateType
-	GridMgr            aoimpl.AOI
-	SightRadius        int
 }
 
-func (m *CMap) Init(name string) {
+func (m *Map) Init(name string) {
 	m.ModeType = aoimpl.MapModeUnKnown
 	m.StateType = aoimpl.MapStateUnKnown
 	m.Name = name
-	m.GridMgr = aoigrid.InitGridManager(1000, 1000, int(aoimpl.GridSize))
+	m.gridMgr = aoigrid.InitGridManager(1000, 1000, aoimpl.GridSize)
+}
+
+func (m *Map) EnterMap(entity *aoimpl.Entity) {
+	m.gridMgr.EnterMap(entity)
+}
+
+func (m *Map) GetEntity(id int) *aoimpl.Entity {
+	return m.gridMgr.GetEntity(id)
+}
+
+func (m *Map) Print() {
+	m.gridMgr.Release()
 }

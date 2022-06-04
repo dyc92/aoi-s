@@ -41,14 +41,16 @@ func TestQueryQueueEntry(t *testing.T) {
 
 	// Add the entries.
 	for _, s := range cells {
-		q.push(&queryQueueEntry{
-			distance:  s.dist,
-			id:        cellIDFromString(s.cell),
-			indexCell: nil,
-		})
+		q.push(
+			&queryQueueEntry{
+				distance:  s.dist,
+				id:        cellIDFromString(s.cell),
+				indexCell: nil,
+			},
+		)
 	}
 
-	// Insert one new item (should end up in position 2)
+	// Add one new item (should end up in position 2)
 	item := &queryQueueEntry{
 		distance:  minDistance(s1.ChordAngleFromAngle(s1.Angle(0.107601))),
 		id:        cellIDFromString("1/3201003"),

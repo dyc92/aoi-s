@@ -4,30 +4,26 @@ import (
 	"aoi-s/aoimpl"
 	cmap "aoi-s/aoimpl/map"
 	"aoi-s/geo/r3"
-	"fmt"
-
+	"math/rand"
 	"strconv"
+	"time"
 )
 
 func main() {
+	gameMap := cmap.Map{}
+	gameMap.Init("StormWall")
+	random := rand.New(rand.NewSource(time.Now().UTC().Unix()))
 
-	cmap := cmap.CMap{}
-	cmap.Init("default")
-	for i := 0; i < 100; i++ {
-		e := &aoimpl.Entity{
-			Id:       i + 1,
-			Name:     "Entity" + strconv.Itoa(i),
+	for i := 1; i < 1001; i++ {
+		entity := &aoimpl.Entity{
+			Id:       100000 + i*100,
+			Name:     "Role" + strconv.Itoa(i),
 			Type:     aoimpl.Player,
-			Position: r3.Vector{X: float64(i * 2), Z: float64(i * 2)},
-			MaxSpeed: 5,
+			Position: r3.Vector{X: float64(random.Intn(1000)), Z: float64(random.Intn(1000))},
 		}
-		e.GridID = cmap.GridMgr.Pos2GridIndex(e.Position)
-		cmap.GridMgr.EnterMap(e)
+		gameMap.EnterMap(entity)
 	}
-	e := cmap.GridMgr.GetEntity(99)
-	if e != nil {
-		fmt.Printf("%+v", e)
-	}
+	gameMap.Print()
 }
 
 type aoiAlloc func(ud interface{}, ptr interface{}, sz int) interface{}

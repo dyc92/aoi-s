@@ -5,7 +5,8 @@ import (
 )
 
 type Grid struct {
-	Id, X, Y int //格子坐标3
+	Id   int
+	X, Y int //格子坐标
 
 	Entities map[EnumEntityType]map[*Entity]struct{}
 }
@@ -15,7 +16,6 @@ func (g *Grid) Init() {
 }
 
 func (g *Grid) Add(e *Entity) {
-
 	if _, ok := g.Entities[e.Type]; !ok {
 		g.Entities[e.Type] = make(map[*Entity]struct{}, 500)
 	}

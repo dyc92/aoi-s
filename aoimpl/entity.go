@@ -1,18 +1,19 @@
 package aoimpl
 
 import (
+	"aoi-s/Game/ECSComponent/ComponentDefine"
 	. "aoi-s/common"
 	"aoi-s/geo/r3"
 )
 
 type Entity struct {
-	Id        int
-	GridID    int
-	SightGrid int
-	KnowGrid  int
-	Name      string
-	Type      EnumEntityType
+	Id       int
+	GridID   int
+	SkipStep int //TODO：如果提前算出坐标与grid最近边的步长(距离/最大速度），即可以跳过数帧不执行扫描，以节约性能
+	Name     string
+	Type     EnumEntityType
 
+	Components  map[ComponentDefine.EnumComponentType]ComponentDefine.IBaseComponent
 	Position    r3.Vector //位置
 	Rotation    r3.Vector //旋转
 	Orientation r3.Vector //方向

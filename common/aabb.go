@@ -1,4 +1,4 @@
-﻿package common
+package common
 
 import r3 "aoi-s/geo/r3"
 
@@ -17,11 +17,11 @@ func NewBox() A3DAABB {
 }
 
 func (a *A3DAABB) Clear() {
-	a.Mins = r3.Vector{999999.0, 999999.0, 999999.0}
-	a.Maxs = r3.Vector{999999.0, 999999.0, 999999.0}
+	a.Mins = r3.Vector{X: 999999.0, Y: 999999.0, Z: 999999.0}
+	a.Maxs = r3.Vector{X: 999999.0, Y: 999999.0, Z: 999999.0}
 }
 
-func (a *A3DAABB) CompleteCenterExts() {
+func (a *A3DAABB) CompleteCenterExits() {
 	a.Center = a.Mins.Add(a.Maxs).Mul(0.5)
 	a.Extents = a.Maxs.Sub(a.Center)
 }

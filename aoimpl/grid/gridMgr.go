@@ -3,27 +3,37 @@ package aoigrid
 import (
 	. "aoi-s/aoimpl"
 	"aoi-s/geo/r3"
+	"fmt"
 	"math"
+	"strconv"
+	"strings"
 	"sync"
 )
 
 type GridManager struct {
+	grids     []*Grid
+	entityMap sync.Map
+
 	width, height             float64
-	gridSize                  int
+	gridSize                  float64
 	minX, minZ, maxX, maxZ    float64
 	maxRow, maxCol, maxGridID int
-	grids                     []*Grid
-	entityMap                 sync.Map
 }
 
-func InitGridManager(width, height float64, gridSize int) (gm *GridManager) {
-	gm = &GridManager{}
-	gm.width, gm.height, gm.gridSize = width, height, gridSize
-	gm.maxX, gm.maxZ = width/2, height/2
-	gm.minX, gm.minZ = -gm.maxX, -gm.maxZ
+func InitGridManager(width, height float64, gridSize float64) (gm *GridManager) {
+	gm = &GridManager{
+		width:     width,
+		height:    height,
+		gridSize:  gridSize,
+		maxX:      width / 2,
+		maxZ:      height / 2,
+		minX:      -width / 2,
+		minZ:      -height / 2,
+		maxRow:    int(math.Ceil(height / gridSize)),
+		maxCol:    int(math.Ceil(width / gridSize)),
+		entityMap: sync.Map{},
+	}
 
-	gm.maxRow = int(math.Floor(height/float64(gridSize))) + 1
-	gm.maxCol = int(math.Floor(width/float64(gridSize))) + 1
 	gm.maxGridID = gm.maxRow * gm.maxCol
 	gm.grids = make([]*Grid, 0, gm.maxGridID)
 	for i := 0; i < gm.maxGridID; i++ {
@@ -31,7 +41,7 @@ func InitGridManager(width, height float64, gridSize int) (gm *GridManager) {
 		g.Init()
 		gm.grids = append(gm.grids, g)
 	}
-	gm.entityMap = sync.Map{}
+
 	return
 }
 
@@ -48,8 +58,8 @@ func (gm GridManager) LengthInGrid(l float64) int {
 }
 
 func (gm GridManager) Pos2GridIndex(pos r3.Vector) int {
-	row := int(math.Floor(pos.Z-gm.minZ) / float64(gm.gridSize))
-	col := int(math.Floor(pos.X-gm.minX) / float64(gm.gridSize))
+	row := int(math.Floor(pos.Z-gm.minZ) / gm.gridSize)
+	col := int(math.Floor(pos.X-gm.minX) / gm.gridSize)
 	return row*gm.maxCol + col
 }
 
@@ -67,7 +77,15 @@ func (gm GridManager) IsPosValid(pos r3.Vector) bool {
 }
 
 func (gm *GridManager) Release() {
+	str := strings.Builder{}
+	str.Grow(1000)
+	for i := 0; i < len(gm.grids); i++ {
+		es := gm.grids[i].GetEntities(Player)
+		str.WriteString("index:+" + strconv.Itoa(i) + ",count:" + strconv.Itoa(len(es)) + "\r\n")
+	}
+	fmt.Println(str.String())
 	gm.grids = make([]*Grid, gm.maxGridID)
+	gm.entityMap = sync.Map{}
 }
 
 func (gm *GridManager) EnterMap(e *Entity) {
@@ -88,6 +106,10 @@ func (gm *GridManager) LeaveMap(e *Entity) {
 }
 
 func (gm *GridManager) UpdatePos(e *Entity) {
+	e.SkipStep--
+	if e.SkipStep > 0 {
+		return
+	}
 	if !gm.IsPosValid(e.Position) {
 		return
 	}
